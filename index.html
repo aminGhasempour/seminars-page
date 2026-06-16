@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Joint Statistical Seminars</title>
+  <meta name="description" content="Upcoming and previous seminars in mathematical statistics." />
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --ink: #0b0b0b;
+      --muted: #53616f;
+      --line: #d8e0e7;
+      --brand: #2A4765;
+      --brand-2: #426782;
+      --accent: #f3c300;
+      --accent-soft: #fff6cc;
+      --danger-soft: #f3e5e1;
+      --shadow: 0 24px 60px rgba(42, 71, 101, 0.12);
+      --radius: 24px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(243, 195, 0, 0.18), transparent 34rem),
+        radial-gradient(circle at 96% 6%, rgba(42, 71, 101, 0.16), transparent 26rem),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -4rem;
+      z-index: 10;
+      padding: .7rem 1rem;
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      transition: top .2s ease;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--paper) 82%, transparent);
+      border-bottom: 1px solid rgba(216, 224, 231, .9);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 74px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+      font-weight: 850;
+      letter-spacing: -.03em;
+    }
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: var(--brand);
+      color: white;
+      box-shadow: 0 14px 30px rgba(42, 71, 101, .22);
+      font-weight: 900;
+    }
+    .logo small {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 650;
+      letter-spacing: .02em;
+      margin-top: -.12rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a, .button {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: .72rem 1rem;
+      text-decoration: none;
+      font-weight: 750;
+      font-size: .94rem;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .nav-links a:hover, .button:hover { transform: translateY(-1px); background: rgba(42,71,101,.06); }
+    .button.primary {
+      background: var(--brand);
+      color: white;
+      box-shadow: 0 14px 28px rgba(42,71,101,.18);
+    }
+    .button.ghost { border-color: var(--line); background: var(--paper); }
+    .button.small { padding: .58rem .78rem; font-size: .86rem; }
+
+    .hero {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 5rem 0 2rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+      gap: 2rem;
+      align-items: end;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      padding: .38rem .72rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      border-radius: 999px;
+      font-weight: 800;
+      color: var(--brand);
+      font-size: .9rem;
+    }
+    .pulse {
+      width: .58rem;
+      height: .58rem;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(243,195,0,.22);
+    }
+    h1 {
+      margin: 1.1rem 0 1rem;
+      font-size: clamp(2.7rem, 8vw, 5.9rem);
+      line-height: .92;
+      letter-spacing: -.075em;
+      max-width: 10ch;
+    }
+    .hero-text {
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.8vw, 1.24rem);
+      margin: 0 0 1.6rem;
+    }
+    .hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    .feature-card {
+      border: 1px solid rgba(216,224,231,.92);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.82));
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+    }
+    .next-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: .78rem;
+      font-weight: 900;
+      margin: .3rem 0 .95rem;
+    }
+    .next-title {
+      font-size: 1.5rem;
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      margin: 0 0 1rem;
+    }
+    .meta-list { display: grid; gap: .65rem; color: var(--muted); font-weight: 640; }
+    .meta-item { display: flex; gap: .6rem; align-items: flex-start; }
+    .meta-icon { width: 1.25rem; color: var(--brand); flex: 0 0 auto; }
+
+    .stats {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 1rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .stat {
+      padding: 1.2rem;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+    }
+    .stat strong { display: block; font-size: 2rem; letter-spacing: -.05em; }
+    .stat span { color: var(--muted); font-weight: 700; font-size: .9rem; }
+
+    main {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 3rem 0 5rem;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.82);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 60px rgba(42, 71, 101, .08);
+      overflow: hidden;
+    }
+    .toolbar {
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto auto auto;
+      gap: .75rem;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+    }
+    .input, .select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 0 1rem;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+    }
+    .input:focus, .select:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px rgba(42,71,101,.14); }
+    .tabs { display: flex; gap: .4rem; padding: .25rem; background: #e8edf2; border-radius: 999px; }
+    .tab {
+      border: 0;
+      background: transparent;
+      border-radius: 999px;
+      padding: .62rem .95rem;
+      font: inherit;
+      cursor: pointer;
+      font-weight: 850;
+      color: var(--muted);
+    }
+    .tab.active { background: var(--paper); color: var(--brand); box-shadow: 0 8px 18px rgba(42,71,101,.10); }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      padding: 1.35rem 1.35rem .2rem;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      letter-spacing: -.055em;
+    }
+    .section-head p { margin: .25rem 0 0; color: var(--muted); }
+    .count-pill {
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: .5rem .75rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .timeline { padding: 1rem 1.35rem 1.5rem; }
+    .group { margin-top: 1.2rem; }
+    .group-title {
+      position: sticky;
+      top: 76px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .44rem .72rem;
+      border-radius: 999px;
+      background: var(--brand);
+      color: white;
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .02em;
+      box-shadow: 0 10px 20px rgba(42,71,101,.14);
+    }
+    .cards { display: grid; gap: .9rem; margin-top: .85rem; }
+    .seminar-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 106px minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: 20px;
+      padding: 1rem;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .seminar-card:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(42,71,101,.10); border-color: color-mix(in srgb, var(--brand) 38%, var(--line)); }
+    .date-tile {
+      background: #edf2f6;
+      border-radius: 16px;
+      min-height: 96px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: .65rem;
+      color: var(--brand);
+      font-weight: 900;
+    }
+    .date-tile .day { font-size: 2rem; line-height: .95; letter-spacing: -.07em; }
+    .date-tile .month { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+    .date-tile .year { color: var(--muted); font-size: .78rem; }
+    .seminar-title { margin: .1rem 0 .4rem; font-size: 1.25rem; line-height: 1.17; letter-spacing: -.035em; }
+    .summary { margin: .7rem 0 0; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+    .tag {
+      border-radius: 999px;
+      background: #eef3f7;
+      color: #42546a;
+      padding: .3rem .55rem;
+      font-weight: 800;
+      font-size: .8rem;
+    }
+    .seminar-actions { display: grid; gap: .5rem; justify-items: end; }
+    .status {
+      border-radius: 999px;
+      padding: .36rem .58rem;
+      font-size: .78rem;
+      font-weight: 900;
+      background: var(--accent-soft);
+      color: #5d4700;
+      white-space: nowrap;
+    }
+    .status.past { background: #e9eef3; color: var(--muted); }
+    .empty-state {
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1rem 1.35rem 1.5rem;
+      text-align: center;
+      background: rgba(255,255,255,.72);
+      color: var(--muted);
+    }
+    .empty-state strong { display: block; color: var(--ink); font-size: 1.25rem; margin-bottom: .35rem; }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.60);
+      padding: 2rem 0;
+    }
+    .footer-inner {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: .94rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(11,11,11,.44);
+      backdrop-filter: blur(6px);
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      max-width: 780px;
+      width: min(100%, 780px);
+      max-height: min(86vh, 900px);
+      overflow: auto;
+      background: var(--paper);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 90px rgba(0,0,0,.24);
+    }
+    .modal-head {
+      padding: 1.15rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+    }
+    .modal h3 { margin: 0; font-size: 1.6rem; line-height: 1.12; letter-spacing: -.04em; }
+    .modal-body { padding: 1.25rem; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+      margin: 1rem 0;
+    }
+    .detail-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: .9rem;
+      background: #f7f9fb;
+    }
+    .detail-box span {
+      display: block;
+      color: var(--muted);
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 900;
+      margin-bottom: .2rem;
+    }
+    .close {
+      border: 0;
+      background: #e8edf2;
+      border-radius: 999px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .toolbar { grid-template-columns: 1fr; }
+      .tabs { justify-content: center; }
+      .seminar-card { grid-template-columns: 84px 1fr; }
+      .seminar-actions { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; }
+      .date-tile { min-height: 84px; }
+      .nav { align-items: flex-start; padding: .8rem 0; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .stats { grid-template-columns: 1fr; }
+      .seminar-card { grid-template-columns: 1fr; }
+      .date-tile { min-height: auto; grid-template-columns: auto auto auto; justify-content: start; gap: .45rem; }
+      .date-tile .day { font-size: 1.4rem; }
+      .section-head { display: block; }
+      .count-pill { display: inline-flex; margin-top: .8rem; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#seminars">Skip to seminars</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="logo" href="#top" aria-label="Seminar home">
+        <span class="logo-mark">Σ</span>
+        <span>Statistics Seminars<small>Department of USBE/Statistics</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#upcoming">Upcoming</a>
+        <a href="#previous">Previous</a>
+        <a href="mailto:jss-umu@lists.umu.se" class="button primary">Suggest a speaker</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <span class="eyebrow"><span class="pulse"></span> Open seminar series</span>
+      <h1>Joint Statistical Seminars</h1>
+      <p class="hero-text">The page for announcing upcoming talks and browsing previous seminars by year, speaker, topic, and venue.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#upcoming">View upcoming seminars</a>
+        <a class="button ghost" href="#previous">Browse archive</a>
+      </div>
+    </div>
+
+    <aside class="feature-card" aria-labelledby="next-seminar-title">
+      <div class="next-label"><span>Next seminar</span><span id="next-seminar-date">—</span></div>
+      <h2 class="next-title" id="next-seminar-title">Loading seminar…</h2>
+      <div class="meta-list" id="next-seminar-meta"></div>
+    </aside>
+  </section>
+
+  <section class="stats" aria-label="Seminar statistics">
+    <div class="stat"><strong id="stat-upcoming">0</strong><span>Upcoming seminars</span></div>
+    <div class="stat"><strong id="stat-previous">0</strong><span>Previous seminars</span></div>
+    <div class="stat"><strong id="stat-speakers">0</strong><span>Speakers listed</span></div>
+    <div class="stat"><strong id="stat-years">0</strong><span>Archive years</span></div>
+  </section>
+
+  <main id="seminars">
+    <section class="panel" aria-label="Seminar list">
+      <div class="toolbar">
+        <label class="sr-only" for="searchInput">Search seminars</label>
+        <input class="input" id="searchInput" type="search" placeholder="Search title, speaker, abstract, venue…" />
+
+        <div class="tabs" role="tablist" aria-label="Seminar view">
+          <button class="tab active" role="tab" aria-selected="true" data-view="upcoming" id="upcoming">Upcoming</button>
+          <button class="tab" role="tab" aria-selected="false" data-view="previous" id="previous">Previous</button>
+        </div>
+
+        <label class="sr-only" for="yearFilter">Filter by year</label>
+        <select class="select" id="yearFilter" aria-label="Filter seminars by year">
+          <option value="all">All years</option>
+        </select>
+
+        <label class="sr-only" for="sortOrder">Sort seminars</label>
+        <select class="select" id="sortOrder" aria-label="Sort seminars">
+          <option value="asc">Soonest first</option>
+          <option value="desc">Newest first</option>
+        </select>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2 id="sectionTitle">Upcoming seminars</h2>
+          <p id="sectionDescription">Seminars are grouped by month. Search and filter update instantly.</p>
+        </div>
+        <span class="count-pill" id="visibleCount">0 seminars</span>
+      </div>
+
+      <div class="timeline" id="seminarList" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span><strong>SEMINARS</strong> </span>
+      <span>Department of Statistics, Umeå University</span>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <h3 id="modalTitle">Seminar details</h3>
+        <button class="close" type="button" id="closeModal" aria-label="Close details">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <script src="seminars.js"></script>
+  <script>
+    /*
+      PAGE CODE
+      You normally do not need to edit below this line.
+      Edit seminars.js to add, remove, or update seminars.
+    */
+
+    // ===== PAGE CODE: you normally do not need to edit below this line =====
+
+    const DATA_LOADED = Array.isArray(window.SEMINARS);
+    const SEMINARS = DATA_LOADED ? window.SEMINARS : [];
+
+    function showMissingDataMessage() {
+      document.querySelector("#next-seminar-title").textContent = "Could not load seminar data";
+      document.querySelector("#next-seminar-date").textContent = "Check seminars.js";
+      document.querySelector("#next-seminar-meta").innerHTML = `
+        <div class="meta-item"><span class="meta-icon">⚠️</span><span>Check that the SEMINARS list inside this HTML file is valid JavaScript.</span></div>
+      `;
+      document.querySelector("#seminarList").innerHTML = `
+        <div class="empty-state">
+          <strong>Seminar data was not loaded</strong>
+          Check the SEMINARS list inside this HTML file, then open the file again.
+        </div>
+      `;
+    }
+
+    const state = {
+      view: "upcoming",
+      search: "",
+      year: "all",
+      sort: "asc"
+    };
+
+    const els = {
+      list: document.querySelector("#seminarList"),
+      search: document.querySelector("#searchInput"),
+      year: document.querySelector("#yearFilter"),
+      sort: document.querySelector("#sortOrder"),
+      tabs: [...document.querySelectorAll(".tab")],
+      sectionTitle: document.querySelector("#sectionTitle"),
+      sectionDescription: document.querySelector("#sectionDescription"),
+      visibleCount: document.querySelector("#visibleCount"),
+      modal: document.querySelector("#modalBackdrop"),
+      modalTitle: document.querySelector("#modalTitle"),
+      modalBody: document.querySelector("#modalBody"),
+      closeModal: document.querySelector("#closeModal")
+    };
+
+    const formatDate = (dateString, options = {}) => new Intl.DateTimeFormat("en-GB", {
+      weekday: options.weekday || undefined,
+      day: "numeric",
+      month: options.month || "long",
+      year: "numeric"
+    }).format(new Date(dateString + "T12:00:00"));
+
+    const dateKey = item => new Date(`${item.date}T${item.startTime || "00:00"}:00`);
+    const isUpcoming = item => dateKey(item) >= startOfToday();
+    const startOfToday = () => {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    };
+    const monthGroup = item => new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(new Date(item.date + "T12:00:00"));
+    const yearOf = item => new Date(item.date + "T12:00:00").getFullYear().toString();
+    const searchBlob = item => [item.title, item.speaker, item.affiliation, item.venue, item.abstract, ...(item.tags || [])].join(" ").toLowerCase();
+    const escapeHtml = text => String(text || "").replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+
+    function init() {
+      populateYears();
+      wireEvents();
+      updateStats();
+      render();
+    }
+
+    function populateYears() {
+      const years = [...new Set(SEMINARS.map(yearOf))].sort((a,b) => b - a);
+      years.forEach(year => {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        els.year.appendChild(option);
+      });
+    }
+
+    function wireEvents() {
+      els.search.addEventListener("input", event => {
+        state.search = event.target.value.trim().toLowerCase();
+        render();
+      });
+      els.year.addEventListener("change", event => {
+        state.year = event.target.value;
+        render();
+      });
+      els.sort.addEventListener("change", event => {
+        state.sort = event.target.value;
+        render();
+      });
+      els.tabs.forEach(tab => tab.addEventListener("click", () => {
+        state.view = tab.dataset.view;
+        els.tabs.forEach(item => {
+          const active = item.dataset.view === state.view;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active);
+        });
+        els.sort.value = state.view === "upcoming" ? "asc" : "desc";
+        state.sort = els.sort.value;
+        render();
+      }));
+      els.closeModal.addEventListener("click", closeModal);
+      els.modal.addEventListener("click", event => { if (event.target === els.modal) closeModal(); });
+      document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+    }
+
+    function updateStats() {
+      const upcoming = SEMINARS.filter(isUpcoming);
+      const previous = SEMINARS.filter(item => !isUpcoming(item));
+      const speakers = new Set(SEMINARS.flatMap(item => item.speaker.split(",").map(name => name.trim()).filter(Boolean)));
+      const years = new Set(SEMINARS.map(yearOf));
+      document.querySelector("#stat-upcoming").textContent = upcoming.length;
+      document.querySelector("#stat-previous").textContent = previous.length;
+      document.querySelector("#stat-speakers").textContent = speakers.size;
+      document.querySelector("#stat-years").textContent = years.size;
+
+      const next = upcoming.sort((a,b) => dateKey(a) - dateKey(b))[0];
+      const nextTitle = document.querySelector("#next-seminar-title");
+      const nextDate = document.querySelector("#next-seminar-date");
+      const nextMeta = document.querySelector("#next-seminar-meta");
+      if (!next) {
+        nextTitle.textContent = "No upcoming seminar announced yet";
+        nextDate.textContent = "Archive open";
+        nextMeta.innerHTML = `<div class="meta-item"><span class="meta-icon">ℹ</span><span>Add a future-dated item to the SEMINARS list and it will appear here automatically.</span></div>`;
+        return;
+      }
+      nextTitle.textContent = next.title;
+      nextDate.textContent = shortDate(next);
+      nextMeta.innerHTML = `
+        <div class="meta-item"><span class="meta-icon">🕒</span><span>${escapeHtml(formatDate(next.date, { weekday: "long" }))}, ${escapeHtml(next.startTime)}–${escapeHtml(next.endTime)}</span></div>
+        <div class="meta-item"><span class="meta-icon">🎙</span><span>${escapeHtml(next.speaker)}, ${escapeHtml(next.affiliation)}</span></div>
+        <div class="meta-item"><span class="meta-icon">📍</span><span>${escapeHtml(next.venue)}</span></div>
+      `;
+    }
+
+    function getFilteredItems() {
+      return SEMINARS
+        .filter(item => state.view === "upcoming" ? isUpcoming(item) : !isUpcoming(item))
+        .filter(item => state.year === "all" || yearOf(item) === state.year)
+        .filter(item => !state.search || searchBlob(item).includes(state.search))
+        .sort((a,b) => state.sort === "asc" ? dateKey(a) - dateKey(b) : dateKey(b) - dateKey(a));
+    }
+
+    function render() {
+      updateStats();
+      const items = getFilteredItems();
+      els.sectionTitle.textContent = state.view === "upcoming" ? "Upcoming seminars" : "Previous seminars";
+      els.sectionDescription.textContent = state.view === "upcoming"
+        ? "Future seminars are shown soonest first. Use search to find a speaker, topic, or venue."
+        : "Past seminars are shown newest first by default and can be filtered by year.";
+      els.visibleCount.textContent = `${items.length} seminar${items.length === 1 ? "" : "s"}`;
+
+      if (!items.length) {
+        els.list.innerHTML = `
+          <div class="empty-state">
+            <strong>No seminars found</strong>
+            Try changing the search term, year filter, or selected tab.
+          </div>
+        `;
+        return;
+      }
+
+      const groups = items.reduce((acc, item) => {
+        const key = state.view === "previous" ? yearOf(item) : monthGroup(item);
+        acc[key] = acc[key] || [];
+        acc[key].push(item);
+        return acc;
+      }, {});
+
+      els.list.innerHTML = Object.entries(groups).map(([group, groupItems]) => `
+        <div class="group">
+          <div class="group-title">${escapeHtml(group)}</div>
+          <div class="cards">
+            ${groupItems.map(cardTemplate).join("")}
+          </div>
+        </div>
+      `).join("");
+
+      els.list.querySelectorAll("[data-open]").forEach(button => {
+        button.addEventListener("click", () => openModal(button.dataset.open));
+      });
+      els.list.querySelectorAll("[data-ics]").forEach(button => {
+        button.addEventListener("click", () => downloadIcs(button.dataset.ics));
+      });
+    }
+
+    function cardTemplate(item) {
+      const date = new Date(item.date + "T12:00:00");
+      const month = new Intl.DateTimeFormat("en-GB", { month: "short" }).format(date);
+      const day = new Intl.DateTimeFormat("en-GB", { day: "numeric" }).format(date);
+      const year = yearOf(item);
+      const upcoming = isUpcoming(item);
+      return `
+        <article class="seminar-card">
+          <time class="date-tile" datetime="${escapeHtml(item.date)}">
+            <span class="month">${escapeHtml(month)}</span>
+            <span class="day">${escapeHtml(day)}</span>
+            <span class="year">${escapeHtml(year)}</span>
+          </time>
+          <div>
+            <div class="meta-item"><span class="meta-icon">🕒</span><span>${escapeHtml(item.startTime)}–${escapeHtml(item.endTime)} · ${escapeHtml(item.venue)}</span></div>
+            <h3 class="seminar-title">${escapeHtml(item.title)}</h3>
+            <div class="meta-item"><span class="meta-icon">🎙</span><span>${escapeHtml(item.speaker)} · ${escapeHtml(item.affiliation)}</span></div>
+            <p class="summary">${escapeHtml(item.abstract)}</p>
+            <div class="tags">${(item.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+          </div>
+          <div class="seminar-actions">
+            <span class="status ${upcoming ? "" : "past"}">${upcoming ? "Upcoming" : "Previous"}</span>
+            <button class="button small ghost" type="button" data-open="${escapeHtml(item.id)}">Details</button>
+            ${upcoming ? `<button class="button small" type="button" data-ics="${escapeHtml(item.id)}">Add to calendar</button>` : ""}
+          </div>
+        </article>
+      `;
+    }
+
+    function openModal(id) {
+      const item = SEMINARS.find(seminar => seminar.id === id);
+      if (!item) return;
+      els.modalTitle.textContent = item.title;
+      els.modalBody.innerHTML = `
+        <div class="detail-grid">
+          <div class="detail-box"><span>Date</span>${escapeHtml(formatDate(item.date, { weekday: "long" }))}</div>
+          <div class="detail-box"><span>Time</span>${escapeHtml(item.startTime)}–${escapeHtml(item.endTime)} (${escapeHtml(item.timezone)})</div>
+          <div class="detail-box"><span>Speaker</span>${escapeHtml(item.speaker)}</div>
+          <div class="detail-box"><span>Venue</span>${escapeHtml(item.venue)}</div>
+        </div>
+        <p><strong>Affiliation:</strong> ${escapeHtml(item.affiliation)}</p>
+        <p><strong>Abstract:</strong> ${escapeHtml(item.abstract)}</p>
+        <div class="tags">${(item.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+        <p style="margin-top:1.25rem; display:flex; gap:.6rem; flex-wrap:wrap;">
+          ${isUpcoming(item) ? `<button class="button primary" type="button" onclick="downloadIcs('${escapeHtml(item.id)}')">Add to calendar</button>` : ""}
+          <button class="button ghost" type="button" onclick="navigator.clipboard?.writeText(location.href.split('#')[0] + '#seminars')">Copy page link</button>
+        </p>
+      `;
+      els.modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      els.modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function shortDate(item) {
+      return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" }).format(new Date(item.date + "T12:00:00"));
+    }
+
+    function toIcsDate(date, time) {
+      return `${date.replaceAll("-", "")}T${time.replace(":", "")}00`;
+    }
+
+    function downloadIcs(id) {
+      const item = SEMINARS.find(seminar => seminar.id === id);
+      if (!item) return;
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Statistics Seminars//Seminar UI//EN",
+        "BEGIN:VEVENT",
+        `UID:${item.id}@seminars.local`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z`,
+        `DTSTART;TZID=${item.timezone}:${toIcsDate(item.date, item.startTime)}`,
+        `DTEND;TZID=${item.timezone}:${toIcsDate(item.date, item.endTime)}`,
+        `SUMMARY:${item.title.replace(/\n/g, " ")}`,
+        `LOCATION:${item.venue.replace(/\n/g, " ")}`,
+        `DESCRIPTION:Speaker: ${item.speaker}\\nAffiliation: ${item.affiliation}\\n\\n${item.abstract}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${item.id}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    DATA_LOADED ? init() : showMissingDataMessage();
+  </script>
+</body>
+</html>
